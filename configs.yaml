@@ -1,0 +1,91 @@
+PROMPTS:
+  translator:
+    system_message: |
+      You are a proficient translator. Your task is to translate the given text from German to English.
+      Example: 
+      Input: 'Ich bin ein Berliner.'
+      Output: 'I am a Berliner.'
+    user_message: |
+      Input {input}.
+  rephraser:
+    system_message: |
+      Your task is to rephrase a report of a dream focusing on the description itself rather than the fact that it was a dream.
+      Example: 
+      Input: 'I dreamt about flying over the city. I felt like I left the ground and soared into the sky. It was exhilarating.' 
+      Output: 'I flew over the city. I left the ground and soared into the sky. It was exhilarating.'
+
+      The language could be German or English. Please rephrase the text in the same language.
+    user_message: |
+      Input {input}.
+
+COMPLETION:
+  gpt-40-mini:
+    type: azure
+    model: gpt-4o-mini
+    temperature : 0
+    max_tokens : 16384
+    top_p : 0
+    frequency_penalty : 0
+    presence_penalty : 0
+    best_of : 1
+    stop : None
+    endpoint: https://azureaihub5783833627.openai.azure.com
+    version: "2024-08-01-preview"
+    max-requests: 300
+    time-span: 60
+  gpt-40:
+    type: azure
+    model: gpt-4o
+    temperature: 0 
+    max_tokens : 16384
+    top_p : 0
+    frequency_penalty : 0
+    presence_penalty : 0
+    best_of : 1
+    stop : None
+    endpoint: https://mida-azure-openai.openai.azure.com
+    version: "2024-08-01-preview"
+    max-requests: 200
+    time-span: 60
+
+EMBEDDING:
+  large:
+    type: azure
+    model : text-embedding-3-large
+    engine: ''
+    vectordim: 3072
+    endpoint: https://azureaihub5783833627.openai.azure.com
+    version: "2023-05-15"
+    max-requests: 30
+    time-span: 60
+  small:
+    type: azure
+    model : text-embedding-3-small
+    engine: ''
+    vectordim: 1536
+    endpoint: https://azureaihub5783833627.openai.azure.com
+    version: "2023-05-15"
+    max-requests: 30
+    time-span: 60
+
+
+DEFAULT:
+  completion: gpt-40-mini # One of GPT40 or GPT40-MINI
+  embeddings: large # one of Ada, Small, Large
+
+GOOGLE:
+  ## Google Ads API
+  ads-service: "GoogleAdsService"
+  keywords-service:
+    name: "KeywordPlanIdeaService"
+    type: "GenerateKeywordHistoricalMetricsRequest"
+  targets: 
+    germany: "2276" 
+    german: "1000"
+  max-requests: 1
+  time-span: 2
+  ## Google Search Console API
+  max-rows: 75000
+  row-limit: 25000
+  start-date-gap: 2
+  past-months-window: 3
