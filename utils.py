@@ -136,21 +136,26 @@ async def generate_completion(
             temperature=0,
             max_tokens=4096,
         )
-        logging.debug("Received completion")
-        completion_text = response.choices[0].message.content
-
         if response_model:
-            # Assuming the response is JSON that can be parsed by your Pydantic model:
-            parsed = response_model.parse_raw(completion_text)
-            return parsed
+            response = await client.beta.chat.completions.parse(
+                model="gpt-4o-mini",
+                messages=prompt,
+                temperature=0,
+                max_tokens=4096,
+                response_format = response_model
+                )
+            return response.choices[0].message.parsed
         else:
-            return completion_text
+            response = await client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=prompt,
+                temperature=0,
+                max_tokens=4096,
+                )
+            return response.choices[0].message.content
 
     except KeyError as e:
         logging.error(f"Configuration error: Missing key {str(e)}")
-        return "Error Transforming Text"
-    except openai.APIConnectionError as e:
-        logging.error(f"OpenAI API error: {str(e)}")
         return "Error Transforming Text"
     except asyncio.TimeoutError:
         logging.error("Request timeout: The request took too long to complete")

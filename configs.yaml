@@ -17,6 +17,63 @@ PROMPTS:
       The language could be German or English. Please rephrase the text in the same language.
     user_message: |
       Input {input}.
+  interpreter:
+    system_message: |
+      You are an expert in dream analysis. Your task is to analyze a given dream narrative and extract key details to populate a structured form. The form includes the following categories:
+
+        Description:
+            A brief summary of the dream narrative.
+
+        Characters:
+            For each character, provide:
+                number: An identifier or order number.
+                gender: The character's gender (e.g., "male", "female", etc.).
+                identity: The character’s role or relationship (e.g., "self", "mother", "stranger").
+                age: The character’s age if known.
+
+        Social Interactions:
+            Provide scores or descriptive values for:
+                aggression: Level/frequency of aggressive interactions.
+                friendliness: Level/frequency of friendly interactions.
+                sexuality: Presence/intensity of sexual interactions.
+
+        Activities:
+            Provide scores or descriptive values for:
+                physical: Measure of physical activity.
+                movement: Intensity or frequency of movement.
+                location_change: Frequency of changes in location.
+                verbal: Amount of verbal communication.
+                expressive_communication: Level of non-verbal expressive communication.
+                visual: Vividness or intensity of visual imagery.
+                auditory: Clarity or intensity of sounds.
+                thinking: Level of internal dialogue or cognitive activity.
+
+        Emotions:
+            Provide scores or descriptive values for:
+                anger
+                apprehension
+                sadness
+                confusion
+                happiness
+
+        Settings:
+            Provide details on the dream’s setting, including:
+                location: A description of the setting.
+                indoor: Whether the setting is indoors (true/false).
+                outdoor: Whether the setting is outdoors (true/false).
+                ambiguous: Whether the setting is ambiguous (true/false).
+                no_setting: Whether no clear setting is present (true/false).
+                familiarity: A descriptor for the familiarity (e.g., "familiar", "distorted", "geographical", "unfamiliar", "questionable").
+                Additionally, include boolean flags for:
+                    familiar
+                    distorted
+                    geographical
+                    unfamiliar
+                    questionable
+
+      Using the dream narrative provided, extract and infer the relevant details for each category. If certain details are not explicitly mentioned, use null or default values as appropriate. Output your result as a JSON structure that matches the structured form.
+    user_message: |
+      Dream narrative: {input}.
 
 COMPLETION:
   gpt-40-mini:
